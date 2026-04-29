@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Costos LLM 2026</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; display: flex; justify-content: center; padding: 20px; }
+        .card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        h2 { color: #2c3e50; text-align: center; }
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+        select, input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        .result { margin-top: 2rem; padding: 1rem; background: #e8f4fd; border-left: 5px solid #3498db; border-radius: 4px; }
+        .total { font-size: 1.5rem; color: #2980b9; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>LLM Cost Calculator 2026</h2>
+    
+    <div class="form-group">
+        <label for="model">Modelo</label>
+        <select id="model" onchange="calculate()">
+            <optgroup label="OpenAI">
+                <option value="gpt4o">GPT-4o</option>
+                <option value="gpt4omini">GPT-4o mini</option>
+            </optgroup>
+            <optgroup label="Anthropic">
+                <option value="claudeSonnet">Claude 3.5 Sonnet</option>
+                <option value="claudeOpus">Claude 4.6 Opus</option>
+            </optgroup>
+            <optgroup label="Google">
+                <option value="geminiFlash">Gemini 1.5 Flash</option>
+                <option value="geminiPro">Gemini 1.5 Pro</option>
+            </optgroup>
+            <optgroup label="DeepSeek">
+                <option value="deepseekR1">DeepSeek R1</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="inputTokens">Tokens de Entrada (Input)</label>
+        <input type="number" id="inputTokens" value="1000" oninput="calculate()">
+    </div>
+
+    <div class="form-group">
+        <label for="outputTokens">Tokens de Salida (Output)</label>
+        <input type="number" id="outputTokens" value="500" oninput="calculate()">
+    </div>
+
+    <div class="result">
+        <p>Costo Estimado:</p>
+        <div class="total" id="totalCost">$0.000</div>
+        <small id="priceNote" style="color: #7f8c8d;"></small>
+    </div>
+</div>
+
+<script>
+    // Precios por 1,000,000 de tokens (Abril 2026)
+    const pricing = {
+        gpt4o: { in: 2.50, out: 10.00 },
+        gpt4omini: { in: 0.15, out: 0.60 },
+        claudeSonnet: { in: 3.00, out: 15.00 },
+        claudeOpus: { in: 5.00, out: 25.00 },
+        geminiFlash: { in: 0.30, out: 1.25 }, // Promedio bajo 128k
+        geminiPro: { in: 1.25, out: 5.00 },
+        deepseekR1: { in: 0.55, out: 2.19 }
+    };
+
+    function calculate() {
+        const model = document.getElementById('model').value;
+        const inputTokens = parseFloat(document.getElementById('inputTokens').value) || 0;
+        const outputTokens = parseFloat(document.getElementById('outputTokens').value) || 0;
+
+        const costIn = (inputTokens / 1000000) * pricing[model].in;
+        const costOut = (outputTokens / 1000000) * pricing[model].out;
+        const total = costIn + costOut;
+
+        document.getElementById('totalCost').innerText = `$${total.toFixed(6)}`;
+        document.getElementById('priceNote').innerText = 
+            `Precios: $${pricing[model].in} In / $${pricing[model].out} Out (por 1M tokens)`;
+    }
+
+    // Inicializar
+    calculate();
+</script>
+
+</body>
+</html>

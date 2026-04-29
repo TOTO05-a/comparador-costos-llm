@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM_Costo_Tokens</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+   necesito la opcion de ingresar texto y que me diga cuantos tokens son, y el costo aproximado para cada modelo, con los precios actualizados a abril de 2026, y que se pueda filtrar por proveedor (OpenAI, Anthropic, Google AI Studio, DeepSeek) y ordenar por precio o nombre.
+
+</head>
+<body>
+
+
+    <!-- HTML -->
+<div class="filter-row">
+    <span class="filter-label">Filtrar por proveedor:</span>
+    <select id="providerFilter" class="filter-select">
+      <option value="all">Todos</option>
+      <option value="openai">OpenAI</option>
+      <option value="anthropic">Anthropic</option>
+      <option value="google">Google AI Studio</option>
+      <option value="deepseek">DeepSeek</option>
+    </select>
+  </div>
+  
+  <div class="sort-group">
+    <span class="sort-label">Ordenar por:</span>
+    <select id="sortSelect" class="sort-select">
+      <option value="total-asc">Precio ↑</option>
+      <option value="total-desc">Precio ↓</option>
+      <option value="name">Nombre A-Z</option>
+    </select>
+  </div>
+  
+    <div class="input-section">
+        <div class="section-title">// Configurar tokens</div>
+        <div class="inputs-row">
+          <div class="input-label">Texto de entrada:</div>
+          <input id="textInput" type="text" placeholder="Escribe aquí tu texto">
+        </div>
+        <div class="inputs-row">
+          <button id="calculateButton" class="input-button">Calcular tokens</button>
+        </div>
+      </div>
+
+<div class="container">
+
+  <header>
+    <div class="badge">⚡ Precios verificados · Abril 2026</div>
+    <h1>LLM Token Cost<br><span>Calculator</span></h1>
+    <p class="subtitle">Calcula el costo exacto de tokens para los principales modelos de IA</p>
+  </header>
+
+  <!-- INPUT -->
+  <div class="input-section">
+    <div class="section-title">// Configurar tokens</div>
+    <div class="inputs-row">
+      <div class="input-group">
+        <label for="inputTokens">
+          <span class="dot dot-in"></span>
+          Tokens de entrada
+        </label>
+        <input type="number" id="inputTokens" value="10000" min="0" step="1000" placeholder="ej: 10000">
+        <span class="hint">≈ 7,500 palabras · 1 token ≈ 4 chars</span>
+      </div>
+      <div class="input-group">
+        <label for="outputTokens">
+          <span class="dot dot-out"></span>
+          Tokens de salida
+        </label>
+        <input type="number" id="outputTokens" value="2000" min="0" step="500" placeholder="ej: 2000">
+        <span class="hint">≈ 1,500 palabras de respuesta</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary-bar" id="summaryBar">
+    <div class="summary-stat">
+      <span class="summary-stat-val" id="totalTokens">12,000</span>
+      <span class="summary-stat-label">Tokens totales</span>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-stat">
+      <span class="summary-stat-val" id="cheapestCost">$0.000</span>
+      <span class="summary-stat-label">Más barato</span>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-stat">
+      <span class="summary-stat-val" id="mostExpensiveCost">$0.000</span>
+      <span class="summary-stat-label">Más caro</span>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-stat">
+      <span class="summary-stat-val" id="modelsShown">—</span>
+      <span class="summary-stat-label">Modelos</span>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls-row">
+    <div class="filter-row" style="margin-bottom:0; flex-wrap: wrap;">
+      <span class="filter-label">Filtrar:</span>
+      <button class="filter-btn active" data-provider="all">Todos</button>
+      <button class="filter-btn" data-provider="openai">OpenAI</button>
+      <button class="filter-btn" data-provider="claude">Claude</button>
+      <button class="filter-btn" data-provider="gemini">Gemini</button>
+      <button class="filter-btn" data-provider="deepseek">DeepSeek</button>
+    </div>
+    <div class="sort-group">
+      <span class="sort-label">Ordenar:</span>
+      <select id="sortSelect">
+        <option value="total-asc">Precio ↑</option>
+        <option value="total-desc">Precio ↓</option>
+        <option value="name">Nombre A-Z</option>
+        <option value="provider">Proveedor</option>
+      </select>
+    </div>
+  </div>
+  <div style="margin-bottom:16px;">
+    <span class="model-count">Mostrando <span id="visibleCount">0</span> modelos</span>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-grid" id="resultsGrid"></div>
+  <div class="empty-state" id="emptyState">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+    <p>No hay modelos para mostrar</p>
+  </div>
+
+  <footer>
+    Precios en USD por millón de tokens · Fuentes: OpenAI, Anthropic, Google AI Studio, DeepSeek API Docs<br>
+    Actualizado abril 2026 · Los precios pueden cambiar · Verifica en los sitios oficiales
+  </footer>
+</div>
+
+<script>
+</script>
+</body>
+</html>
